@@ -1,12 +1,11 @@
 import cats.data.Validated
 import enumeratum.values.{StringEnum, StringEnumEntry}
 
-sealed abstract class Item(val value: String, val price: Double) extends StringEnumEntry
+sealed abstract class Item(val value: String, val price: BigDecimal) extends StringEnumEntry
 
 object Item extends StringEnum[Item] {
 
   final case object Apple extends Item("apple", 0.6)
-
   final case object Orange extends Item("orange", 0.25)
 
   def fromString(s: String): Validated[ItemNotAvailable, Item] =

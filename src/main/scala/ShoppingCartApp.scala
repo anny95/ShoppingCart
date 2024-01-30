@@ -21,10 +21,16 @@ object ShoppingCartApp extends App {
     }.toList
   }
 
-  def total(input: String): Double = parseItems(input).map(_.price).sum
+  def total(items: List[Item]): BigDecimal = items.map(_.price).sum
+
+  def finalPrice(items: List[Item]): BigDecimal = {
+    val discount = ApplePromotion.discount(items) + OrangePromotion.discount(items)
+    total(items) - discount
+  }
+
 
   val input = readLine()
-  println(s"Total price is: £${total(input)}")
-
+  val items = parseItems(input)
+  println(s"Final price is: £${finalPrice(items)}")
 }
 
